@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    image: backend:v2.0
+    container_name: backend
+    restart: always
+    networks:
+      sep_network:
+        ipv4_address: 172.28.0.2
+  
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    image: frontend:v2.0
+    container_name: frontend
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+    networks:
+      sep_network:
+        ipv4_address: 172.28.0.3
+  
+networks:
+    sep_network:
+      driver: bridge
+      ipam:
+        config:
+          - subnet: 172.28.0.0/16
