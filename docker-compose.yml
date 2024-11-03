@@ -1,13 +1,15 @@
-version: '3.8'
+version: '3.0'
 
 services:
   backend:
     build:
       context: ./Backend
       dockerfile: Dockerfile
-    image: backend:v2.0
+    image: backend:v3.0
     container_name: backend
     restart: always
+    volumes:
+      - "C:/Users/Professional/Desktop:/app"
     networks:
       sep_network:
         ipv4_address: 172.28.0.2
@@ -16,11 +18,11 @@ services:
     build:
       context: ./Frontend
       dockerfile: Dockerfile
-    image: frontend:v2.0
+    image: frontend:v3.0
     container_name: frontend
     restart: always
     ports:
-      - "8080:8080"
+      - "8070:8070"
     depends_on:
       - backend
     networks:
